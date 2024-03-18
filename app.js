@@ -140,3 +140,30 @@ cartButton.onclick = () => {
     "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
   );
 };
+function generateWhatsAppMessage() {
+  let orderDetailsString = "Order Details:\n";
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].quantity !== 0) {
+      orderDetailsString += `${items[index].name} - Quantity: ${items[index].quantity}\n`;
+    }
+  }
+  const totalAmountString = `Total Amount: $${finalDollars}.${finalCents}`;
+
+  return `${orderDetailsString}${totalAmountString}`;
+}
+
+function generateOrderMessage() {
+  return generateWhatsAppMessage();
+}
+
+cartButton.onclick = () => {
+  updatePrice();
+  let textMessage = generateOrderMessage();
+  const phoneNumber = 919000000000;
+  const whatsappURL =
+    "https://api.whatsapp.com/send?phone=" +
+    phoneNumber +
+    "&text=" +
+    encodeURIComponent(textMessage);
+  window.location.href = whatsappURL;
+};
